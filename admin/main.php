@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Css -->
-    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
     
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,12 +19,12 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     
-    <title>Sidebar</title>
+    <title>Home - Tanah Lapang</title>
 </head>
 <body>
     <div class="sidebar">
         <div class="logo_details">
-            <img src="/img/logo_tanah_datar.png" alt="" width="48" height="48">
+            <img src="../img/logo_tanah_datar.png" alt="" width="48" height="48">
             <span class="logo_name">Nagari Guguk Malalo</span>
         </div>
         <ul class="nav_links">
@@ -117,7 +117,7 @@
             <li>
             <div class="profile_details">
                 <div class="profile_content">
-                    <img src="/img/fadli.jpg" alt="Foto">
+                    <img src="../img/fadli.jpg" alt="Foto">
                 </div>
                     <div class="name_job">
                         <div class="profile_name">Ahmad Fadli Ramadhan</div>
@@ -132,11 +132,15 @@
     <section class="home_section">
         <div class="home_content">
             <i class="fa-solid fa-bars fa-2xl"></i>
-            <span class="text">Drop Down Sidebar</span>
+            <span class="text">Selamat Datang, ...</span>
         </div>
+
+        <?php 
+        include('home.php');
+        ?>
     </section>
 
-<script src="/js/script.js"></script>
+<script src="../js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>
 </html>
