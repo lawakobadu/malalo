@@ -18,6 +18,10 @@
     transition: all 0.5s ease;
 }
 
+.fw-700{
+    font-weight: 700;
+}
+
 .sidebar.close{
     width: 78px;
 }
@@ -247,7 +251,7 @@
 .home_section{
     position: relative;
     background: #f6f6f6;
-    height: 100vh;
+    /* height: 100vh; */
     left: 260px;
     width: calc(100% - 260px);
     transition: all 0.5s ease;
@@ -272,4 +276,11 @@
 .home_section .home_content .text{
     font-size: 26px;
     font-weight: 600;
+}
+
+footer{
+    background: #2A272A;
+    bottom: 0;
+    /* position: fixed; */
+    width: 100%;
 }
