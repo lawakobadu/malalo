@@ -1,3 +1,14 @@
+<?php
+session_start();
+if(isset($_SESSION['login'])){
+    echo "<script>alert('Anda sudah login ke dalam sistem');window.location='/malalo/admin/home.php'</script>";
+
+}
+
+if(!isset($_SESSION['username'])){
+    echo "<script>alert('Anda harus login dulu ke dalam sistem');window.location='/malalo/admin/'</script>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,25 +40,48 @@ include('../../config.php');
 $sql = "SELECT * FROM profil WHERE id=1";
 $res = $conn->query($sql);
 $data = $res -> fetch_assoc();
+
+if ($_SESSION['status'] === '0')
+          {
+          ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong><?= $_SESSION['pesan']; ?></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <?php 
+            unset($_SESSION['status']);
+            unset($_SESSION['pesan']);
+          } 
+          else if ($_SESSION['status'] === '1')
+          {
+          ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong><?= $_SESSION['pesan']; ?></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+      <?php 
+            unset($_SESSION['status']);
+            unset($_SESSION['pesan']);
+          } 
 ?>
     <section class="home_section">
         <div class="home_content">
             <i class="fa-solid fa-bars fa-2xl"></i>
-            <span class="text">Selamat Datang, ...</span>
+            <span class="text">Selamat Datang, <?php echo $_SESSION['username']; ?></span>
         </div>
 
         <div class="container">
             <div class="content p-4">
-                <div class="card shadow rounded-4" style="border: none;">
+                <div class="card shadow rounded-4" style="border: none;"><?php var_dump($sql); ?>
                     <div class="card-body p-5">
                         <form action="action.php" method="post">
                             <h3 class="fw-700">Visi</h3>
                             <div class="form-floating mb-5">
-                                <textarea class="form-control" placeholder="Visi" style="height: 100px" id="floatingTextarea"><?php echo $data['visi'];?></textarea>
+                                <textarea class="form-control" name="visi" placeholder="Visi" style="height: 100px" id="floatingTextarea"><?php echo $data['visi'];?></textarea>
                             </div>
                             <h3 class="fw-700">Misi</h3>
                             <div class="form-floating mb-5">
-                                <textarea class="form-control" placeholder="Misi" style="height: 300px" id="floatingTextarea"><?php echo $data['misi'];?></textarea>
+                                <textarea class="form-control" name="misi" placeholder="Misi" style="height: 300px" id="floatingTextarea"><?php echo $data['misi'];?></textarea>
                             </div>
                             <button type="button" name="simpan" class="btn btn-success float-end">Simpan</button>
                         </form>

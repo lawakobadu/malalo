@@ -1,6 +1,25 @@
 <?php
 require("../config.php");
-session_start()
+session_start();
+
+if (isset($_SESSION['username'])) {
+  header("Location: home.php");
+}
+
+if (isset($_POST['submit'])) {
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+
+  $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+  $result = mysqli_query($conn, $sql);
+  if ($result->num_rows > 0) {
+      $row = mysqli_fetch_assoc($result);
+      $_SESSION['username'] = $row['username'];
+      header("Location: home.php");
+  } else {
+      echo "<script>alert('Username atau password Anda salah. Silahkan coba lagi!')</script>";
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -82,26 +101,25 @@ session_start()
 <body class="text-center">
     
 <main class="form-signin w-100 m-auto">
-    <form action="home.php" method="post"></form>
-  <form >
+    <form action="" method="post">
     <img class="mb-4" src="../img/logo_tanah_datar.png" alt="">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <h1 class="text-white h3 mb-3 fw-normal">Please sign in</h1>
 
     <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInput" placeholder="Username">
+      <input name="username" type="text" class="form-control" id="floatingInput" required placeholder="Username">
       <label for="floatingInput">Username</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <input name="password" type="password" class="form-control" id="floatingPassword" required placeholder="Password">
       <label for="floatingPassword">Password</label>
     </div>
 
-    <div class="checkbox mb-3">
+    <div class="text-white checkbox mb-3">
       <label>
         <input type="checkbox" value="remember-me"> Remember me
       </label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <button name="submit" class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
   </form>
 </main>

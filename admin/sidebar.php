@@ -123,7 +123,7 @@
                         <div class="profile_name">Ahmad Fadli Ramadhan</div>
                         <div class="job">Programmer</div>
                     </div>
-                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <a href="/malalo/admin/logout.php"><i class="fa-solid fa-right-from-bracket"></i></a>
                 </div>
             </li>
         </ul>

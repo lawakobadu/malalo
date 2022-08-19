@@ -1,3 +1,14 @@
+<?php
+session_start();
+if(isset($_SESSION['login'])){
+    echo "<script>alert('Anda sudah login ke dalam sistem');window.location='/malalo/admin/home.php'</script>";
+
+}
+
+if(!isset($_SESSION['username'])){
+    echo "<script>alert('Anda harus login dulu ke dalam sistem');window.location='/malalo/admin/'</script>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +30,7 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     
-    <title>Home - Tanah Lapang</title>
+    <title>Dashboard</title>
 </head>
 <body>
 <?php
@@ -28,7 +39,7 @@ include('sidebar.php')
     <section class="home_section">
         <div class="home_content">
             <i class="fa-solid fa-bars fa-2xl"></i>
-            <span class="text">Selamat Datang, ...</span>
+            <span class="text">Selamat Datang, <?php echo $_SESSION['username']; ?></span>
         </div>
 
         <div class="container">
