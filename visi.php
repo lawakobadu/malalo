@@ -1,3 +1,9 @@
+<?php
+require_once ('config.php');
+$sql = "SELECT * FROM profil WHERE id=1";
+$res = $conn->query($sql);
+$data = $res -> fetch_assoc();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,11 +67,11 @@
                         <div class="card-body p-5">
                             <h3 class="fw-700">Visi</h3>
                             <div class="form-floating mb-5">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis aut quae, consequatur rerum repellat tempora at, dolores error vero maiores rem ratione ipsam recusandae molestias ipsa dolore officiis debitis atque distinctio velit totam sequi. Aut atque ab eligendi et, facilis quas aspernatur enim modi inventore mollitia distinctio fuga vitae architecto ea molestias nobis laboriosam omnis velit impedit sint. Voluptate eaque hic eius amet eum ea repellendus iusto. Sit repellendus perspiciatis voluptas, doloribus libero eos at enim facere commodi magni quidem laudantium accusantium vero distinctio nobis facilis minus non repellat itaque molestiae maxime pariatur tempora voluptate cupiditate. Quidem alias voluptatem neque?</p>
+                                <p><?php echo $data['visi']; ?></p>
                             </div>
                             <h3 class="fw-700">Misi</h3>
                             <div class="form-floating mb-5">
-                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni nam, perspiciatis, error ad quis excepturi non soluta ea ex numquam voluptatem repellendus, odit velit neque dolorum reiciendis illo esse quas at. Earum ex suscipit deleniti vitae repellendus eius ea dolor voluptatum quas sit quisquam excepturi rerum aut nulla, quos, non ipsa autem in omnis! Nostrum voluptates nam nulla modi dolorem recusandae at nihil vitae aperiam magnam maiores, labore accusantium impedit vero quam repudiandae aut fuga nemo qui consectetur corrupti odio voluptatibus in? Corporis, officiis temporibus doloremque magni impedit architecto ex saepe officia veniam reprehenderit doloribus vero. Assumenda ab cumque quia.</p>
+                                <p><?php echo $data['misi']; ?></p>
                             </div>
                         </div>
                     </div>

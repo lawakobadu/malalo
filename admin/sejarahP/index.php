@@ -2,11 +2,12 @@
 session_start();
 if(isset($_SESSION['login'])){
     echo "<script>alert('Anda sudah login ke dalam sistem');window.location='/malalo/admin/home.php'</script>";
-
+    exit;
 }
 
 if(!isset($_SESSION['username'])){
     echo "<script>alert('Anda harus login dulu ke dalam sistem');window.location='/malalo/admin/'</script>";
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -34,31 +35,96 @@ if(!isset($_SESSION['username'])){
 </head>
 <body>
 <?php
-include('../sidebar.php')
+include('../sidebar.php');
+include('../../config.php');
 ?>
-    <section class="home_section">
+    <section class="home_section" style="height: 100vh;">
         <div class="home_content">
             <i class="fa-solid fa-bars fa-2xl"></i>
-            <span class="text">Selamat Datang, ...</span>
+            <span class="text">Selamat Datang, <?php echo $_SESSION['username']; ?></span>
         </div>
 
         <div class="container">
             <div class="content p-4">
                 <div class="card shadow rounded-4" style="border: none;">
                     <div class="card-body p-5">
-                        <!-- <form action="action.php" method="post">
-                            <h3 class="fw-700">Sejarah Pemerintahan</h3>
-                            <div class="form-floating mb-5">
-                                <textarea class="form-control" placeholder="Visi" style="height: 500px" id="floatingTextarea"></textarea>
-                            </div>
-                            <button type="button" name="simpan" class="btn btn-success float-end">Simpan</button>
-                        </form> -->
+                    <?php
+                        if(isset($_SESSION['alert'])){
+                    ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <?php
+                            echo $_SESSION['alert'];
+                        ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    <?php
+                        }else if(isset($_SESSION['alert-gagal'])){
+                    ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?php
+                                echo $_SESSION['alert-gagal'];
+                            ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php
+                        }
+                        unset($_SESSION['alert']);
+                        unset($_SESSION['alert-gagal']);
+                    ?>
+                    <div class="page-header clearfix">
+                        <h3 class="fw-700 pull-left">Sejarah Pemerintahan</h3>
+                        <a href="create.php" class="btn btn-success pull-right">Tambah Baru</a>
+                    </div>
+                    <?php
+                    // Attempt select query execution
+                    $no = 1;
+                    $sql = "SELECT * FROM sejarahP";
+                    if($result = mysqli_query($conn, $sql)){
+                        if(mysqli_num_rows($result) > 0){
+                            echo "<table class='table table-bordered table-striped'>";
+                                echo "<thead>";
+                                    echo "<tr>";
+                                        echo "<th>No.</th>";
+                                        echo "<th>Nama</th>";
+                                        echo "<th>Masa Jabatan</th>";
+                                        echo "<th>Foto</th>";
+                                    echo "</tr>";
+                                echo "</thead>";
+                                echo "<tbody>";
+                                while($row = mysqli_fetch_array($result)){
+                                    echo "<tr>";
+                                        echo "<td>" . $no++ . "</td>";
+                                        echo "<td>" . $row['nama'] . "</td>";
+                                        echo "<td>" . $row['tahun'] . "</td>";
+                                        ?><td> <img src="/malalo/upload/sejarahP/<?php echo $row['foto'];?>" alt="Foto"></td><?php
+                                        echo "<td>";
+                                            echo "<a href='read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='fa-solid fa-eye'></span></a>";
+                                            echo "<a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='fa-solid fa-pencil'></span></a>";
+                                            echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='fa-solid fa-trash'></span></a>";
+                                        echo "</td>";
+                                    echo "</tr>";
+                                }
+                                echo "</tbody>";
+                            echo "</table>";
+                            // Free result set
+                            mysqli_free_result($result);
+                        } else{
+                            echo "<p class='lead'><em>No records were found.</em></p>";
+                        }
+                    } else{
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+                    }
+
+                    // Close connection
+                    mysqli_close($conn);
+                    ?>
                     </div>
                 </div>
             </div>
         </div>
 
-        <footer class="py-4 mt-auto">
+        <footer class="position-fixed py-4 mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
                     <div class="text-white">

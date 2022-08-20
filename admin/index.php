@@ -4,6 +4,7 @@ session_start();
 
 if (isset($_SESSION['username'])) {
   header("Location: home.php");
+  exit;
 }
 
 if (isset($_POST['submit'])) {
@@ -16,8 +17,10 @@ if (isset($_POST['submit'])) {
       $row = mysqli_fetch_assoc($result);
       $_SESSION['username'] = $row['username'];
       header("Location: home.php");
+      exit;
   } else {
       echo "<script>alert('Username atau password Anda salah. Silahkan coba lagi!')</script>";
+      exit;
   }
 }
 ?>

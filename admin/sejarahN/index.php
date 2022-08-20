@@ -34,24 +34,53 @@ if(!isset($_SESSION['username'])){
 </head>
 <body>
 <?php
-include('../sidebar.php')
+include('../sidebar.php');
+include('../../config.php');
+
+$sql = "SELECT * FROM profil WHERE id=1";
+$res = $conn->query($sql);
+$data = $res -> fetch_assoc();
 ?>
     <section class="home_section">
         <div class="home_content">
             <i class="fa-solid fa-bars fa-2xl"></i>
-            <span class="text">Selamat Datang, ...</span>
+            <span class="text">Selamat Datang, <?php echo $_SESSION['username']; ?></span>
         </div>
 
         <div class="container">
             <div class="content p-4">
                 <div class="card shadow rounded-4" style="border: none;">
                     <div class="card-body p-5">
+                        <?php
+                            if(isset($_SESSION['alert'])){
+                        ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?php
+                                echo $_SESSION['alert'];
+                            ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <?php
+                            }else if(isset($_SESSION['alert-gagal'])){
+                        ?>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <?php
+                                    echo $_SESSION['alert-gagal'];
+                                ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <?php
+                            }
+                            unset($_SESSION['alert']);
+                            unset($_SESSION['alert-gagal']);
+                        ?>
                         <form action="action.php" method="post">
                             <h3 class="fw-700">Sejarah Nagari</h3>
                             <div class="form-floating mb-5">
-                                <textarea class="form-control" placeholder="Visi" style="height: 500px" id="floatingTextarea"></textarea>
+                                <textarea name="sejarahN" class="form-control" placeholder="Visi" style="height: 500px" id="floatingTextarea"><?php echo $data['sejarahN']; ?></textarea>
                             </div>
-                            <button type="button" name="simpan" class="btn btn-success float-end">Simpan</button>
+                            <button type="input" name="simpan" class="btn btn-success float-end">Simpan</button>
                         </form>
                     </div>
                 </div>

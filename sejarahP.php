@@ -1,3 +1,9 @@
+<?php
+require_once ('config.php');
+$sql = "SELECT * FROM sejarahP";
+$res = $conn->query($sql);
+$data = $res -> fetch_assoc();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
