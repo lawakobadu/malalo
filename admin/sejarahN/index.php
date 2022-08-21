@@ -80,7 +80,7 @@ $data = $res -> fetch_assoc();
                             <div class="form-floating mb-5">
                                 <textarea name="sejarahN" class="form-control" placeholder="Visi" style="height: 500px" id="floatingTextarea"><?php echo $data['sejarahN']; ?></textarea>
                             </div>
-                            <button type="input" name="simpan" class="btn btn-success float-end">Simpan</button>
+                            <button type="submit" name="simpan" class="btn btn-success float-end">Simpan</button>
                         </form>
                     </div>
                 </div>

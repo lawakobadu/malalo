@@ -34,7 +34,12 @@ if(!isset($_SESSION['username'])){
 </head>
 <body>
 <?php
-include('../sidebar.php')
+include('../sidebar.php');
+include('../../config.php');
+
+$sql = "SELECT * FROM profil WHERE id=1";
+$res = $conn->query($sql);
+$data = $res -> fetch_assoc();
 ?>
     <section class="home_section">
         <div class="home_content">
@@ -46,13 +51,38 @@ include('../sidebar.php')
             <div class="content p-4">
                 <div class="card shadow rounded-4" style="border: none;">
                     <div class="card-body p-5">
-                        <!-- <form action="action.php" method="post">
-                            <h3 class="fw-700">Sejarah Nagari</h3>
-                            <div class="form-floating mb-5">
-                                <textarea class="form-control" placeholder="Visi" style="height: 500px" id="floatingTextarea"></textarea>
+                        <?php
+                            if(isset($_SESSION['alert'])){
+                        ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?php
+                                echo $_SESSION['alert'];
+                            ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <?php
+                            }else if(isset($_SESSION['alert-gagal'])){
+                        ?>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <?php
+                                    echo $_SESSION['alert-gagal'];
+                                ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
-                            <button type="button" name="simpan" class="btn btn-success float-end">Simpan</button>
-                        </form> -->
+                        <?php
+                            }
+                            unset($_SESSION['alert']);
+                            unset($_SESSION['alert-gagal']);
+                        ?>
+                        <form action="action.php" method="post">
+                            <div class="page-header clearfix">
+                                <h3 class="fw-700 pull-left">Struktur Organisasi</h3>
+                                <a href="edit.php" class="mt-3 btn btn-success pull-right">Ubah</a>
+                            </div>
+                            <img src="upload/<?php echo $data['struktur'];?>" alt="" class="img-fluid mx-auto d-block"/>
+                            <!-- <button type="button" name="simpan" class="btn btn-success float-end">Simpan</button> -->
+                        </form>
                     </div>
                 </div>
             </div>

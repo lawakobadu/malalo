@@ -74,7 +74,7 @@ include('../../config.php');
                     ?>
                     <div class="page-header clearfix">
                         <h3 class="fw-700 pull-left">Sejarah Pemerintahan</h3>
-                        <a href="create.php" class="btn btn-success pull-right">Tambah Baru</a>
+                        <a href="create.php" class="mt-3 btn btn-success pull-right">Tambah Baru</a>
                     </div>
                     <?php
                     // Attempt select query execution
@@ -82,33 +82,35 @@ include('../../config.php');
                     $sql = "SELECT * FROM sejarahP";
                     if($result = mysqli_query($conn, $sql)){
                         if(mysqli_num_rows($result) > 0){
-                            echo "<table class='table table-bordered table-striped'>";
-                                echo "<thead>";
-                                    echo "<tr>";
-                                        echo "<th>No.</th>";
-                                        echo "<th>Nama</th>";
-                                        echo "<th>Masa Jabatan</th>";
-                                        echo "<th>Foto</th>";
-                                    echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-                                while($row = mysqli_fetch_array($result)){
-                                    echo "<tr>";
-                                        echo "<td>" . $no++ . "</td>";
-                                        echo "<td>" . $row['nama'] . "</td>";
-                                        echo "<td>" . $row['tahun'] . "</td>";
-                                        ?><td> <img src="/malalo/upload/sejarahP/<?php echo $row['foto'];?>" alt="Foto"></td><?php
-                                        echo "<td>";
-                                            echo "<a href='read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='fa-solid fa-eye'></span></a>";
-                                            echo "<a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='fa-solid fa-pencil'></span></a>";
-                                            echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='fa-solid fa-trash'></span></a>";
-                                        echo "</td>";
-                                    echo "</tr>";
-                                }
-                                echo "</tbody>";
-                            echo "</table>";
-                            // Free result set
-                            mysqli_free_result($result);
+                            echo "<div class='table-responsive'>";
+                                echo "<table class='mt-4 table table-bordered table-hover'>";
+                                    echo "<thead class='bg-primary text-white'>";
+                                        echo "<tr>";
+                                            echo "<th>No.</th>";
+                                            echo "<th>Nama</th>";
+                                            echo "<th>Masa Jabatan</th>";
+                                            echo "<th>Foto</th>";
+                                            echo "<th>Action</th>";
+                                        echo "</tr>";
+                                    echo "</thead>";
+                                    echo "<tbody>";
+                                    while($row = mysqli_fetch_array($result)){
+                                        echo "<tr>";
+                                            echo "<td>" . $no++ . "</td>";
+                                            echo "<td>" . $row['nama'] . "</td>";
+                                            echo "<td>" . $row['tahun'] . "</td>";
+                                            ?><td> <img src="upload/<?php echo $row['foto'];?>" alt="Foto" width="100" height="100"></td><?php
+                                            echo "<td>";
+                                                echo "<a class='mx-1 btn btn-warning' href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='text-white fa-solid fa-pencil'></span></a>";
+                                                echo "<a class='mx-1 btn btn-danger' href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='text-white fa-solid fa-trash'></span></a>";
+                                            echo "</td>";
+                                        echo "</tr>";
+                                    }
+                                    echo "</tbody>";
+                                echo "</table>";
+                                // Free result set
+                                mysqli_free_result($result);
+                            echo "</div>";
                         } else{
                             echo "<p class='lead'><em>No records were found.</em></p>";
                         }
@@ -124,7 +126,7 @@ include('../../config.php');
             </div>
         </div>
 
-        <footer class="position-fixed py-4 mt-auto">
+        <footer class="py-4 mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
                     <div class="text-white">

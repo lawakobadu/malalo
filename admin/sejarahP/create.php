@@ -14,86 +14,37 @@ if(!isset($_SESSION['username'])){
 include ("../../config.php");
 if (isset($_POST['simpan'])) 
 {
-    $nama				= $_POST['nama'];
-    $tahun 			    = $_POST['tahun'];
-    $allowExt 			= array( 'png', 'jpg', 'jpeg' );
-    $fileName 			= $_FILES['foto']['name'];
-    $fileExt			= strtolower(end(explode('.', $fileName)));
-    $fileSize			= $_FILES['foto']['size'];
-    $fileTemp 			= $_FILES['foto']['tmp_name'];
-    $upload_dir 		= "/malalo/upload/sejarahP/";
-    $foto 				= basename ($fileName);
-    $v_foto				= str_replace(' ','_',$foto);	
+	$nama = $_POST['nama'];
+	$tahun = $_POST['tahun'];
 
-    if(!$nama && !$tahun){
-        $_SESSION['alert-gagal'] = "Nama dan Tahun tidak boleh kosong!";
-        header("Location: /malalo/admin/sejarahP/create.php");
-    }else if(!$nama){
-        $_SESSION['alert-gagal'] = "Nama tidak boleh kosong!";
-        header("Location: /malalo/admin/sejarahP/create.php");
-    }else if(!$tahun){
-        $_SESSION['alert-gagal'] = "Tahun tidak boleh kosong!";
-        header("Location: /malalo/admin/sejarahP/create.php");
-    }else{
-        if($_FILES['foto']['size'] > 0)
-        {
-            if( in_array( $fileExt, $allowExt ) === TRUE ) 
-            {
-                if( $fileSize < 10044070 ) 
-                {
-                    if(move_uploaded_file($fileTemp,$upload_dir.$v_foto)) 
-                    {
+	if($_FILES['foto']['error'] === 4){
+		$_SESSION['alert-gagal'] = "Gambar tidak ada!";
+		header("Location: /malalo/admin/sejarahP/");
+	}else{
+		$fileName = $_FILES['foto']['name'];
+		$fileSize = $_FILES['foto']['size'];
+		$tmpName = $_FILES['foto']['tmp_name'];
 
-                        $sql = "INSERT INTO `sejarahP`(`nama`, `tahun`, `foto`) VALUES 
-                                            ('', '$nama', '$tahun', '$v_foto')";
-                                            
-                        if ( $conn->query($sql) === TRUE ) 
-                        {
-                            $_SESSION['alert'] = "Pemerintahan baru berhasil ditambahkan";
-                            header("Location: /malalo/admin/sejarahP/");
+		$validImageExtension = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'];
+		$imageExtension = explode('.', $fileName);
+		$imageExtension = strtolower(end($imageExtension));
+		if(!in_array($imageExtension, $validImageExtension)){
+			$_SESSION['alert-gagal'] = "Ektensi gambar tidak diperbolehkan!";
+			header("Location: /malalo/admin/sejarahP/");
+		}else if($fileSize < 1000000){
+			$_SESSION['alert-gagal'] = "Ukuran gambar melebihi 10MB!";
+			header("Location: /malalo/admin/sejarahP/");
+		}else{
+			$newImageName = uniqid();
+			$newImageName .= '.' . $imageExtension;
 
-                        } else 
-                        {
-                            $_SESSION['alert-gagal'] = "Pemerintahan baru gagal ditambahkan 1";
-                            header("Location: /malalo/admin/sejarahP/");
-                        }
-                    }
-                    else
-                    {
-                        $_SESSION['alert-gagal'] = "Pemerintahan baru gagal ditambahkan 2";
-                        header("Location: /malalo/admin/sejarahP/");
-                    }
-                }
-                else
-                {
-                    $_SESSION['alert'] = "Ukuran gambar melebihi 10mb!";
-                    header("Location: /malalo/admin/sejarahP/create.php");
-                }
-            }
-            else
-            {
-                $_SESSION['alert'] = "Ektensi gambar tidak diizinkan!";
-                header("Location: /malalo/admin/sejarahP/create.php");
-            }
-        }
-        else
-        {
-            $foto = "cover.jpg";
-            $sql = "INSERT INTO `sejarahP`(`nama`, `tahun`, `foto`) VALUES 
-            ('$nama', '$tahun','$foto')";
-
-            if ( $conn->query($sql) === TRUE ) 
-            {
-                $_SESSION['alert'] = "Data pemerintahan berhasil ditambahkan";
-                header("Location: /malalo/admin/sejarahP/");
-
-            } else 
-            {
-                $_SESSION['alert'] = "Data pemerintahan gagal ditambahkan!";
-                header("Location: /malalo/admin/sejarahP/");
-            }
-        }	
-    }	
+			move_uploaded_file($tmpName, 'upload/'.$newImageName);
+			$sql = "INSERT INTO sejarahP VALUES ('', '$nama', '$tahun', '$newImageName')";
+			mysqli_query($conn, $sql);
+			$_SESSION['alert'] = "Data pemerintahan berhasil ditambahkan";
+			header("Location: /malalo/admin/sejarahP/");
+		}
+	}
 }
 ?>
 <!DOCTYPE html>
