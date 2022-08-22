@@ -8,14 +8,21 @@ if (isset($_SESSION['username'])) {
 }
 
 if (isset($_POST['submit'])) {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+  $username = mysqli_real_escape_string($conn, $_POST["username"]);  
+  $password = mysqli_real_escape_string($conn, $_POST["password"]); 
 
-  $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+  $sql = "SELECT * FROM users WHERE username='$username'";
   $result = mysqli_query($conn, $sql);
-  if ($result->num_rows > 0) {
-      $row = mysqli_fetch_assoc($result);
+  $row = mysqli_fetch_assoc($result);
+  if (password_verify($password, $row['password'])) {
+      $_SESSION['id'] = $row['id'];
       $_SESSION['username'] = $row['username'];
+      $_SESSION['password'] = $row['password'];
+      $_SESSION['name'] = $row['name'];
+      $_SESSION['role'] = $row['role'];
+      $_SESSION['nip'] = $row['nip'];
+      $_SESSION['jabatan'] = $row['jabatan'];
+      $_SESSION['foto'] = $row['foto'];
       header("Location: home.php");
       exit;
   } else {

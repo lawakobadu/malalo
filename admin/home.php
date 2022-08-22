@@ -43,7 +43,13 @@ include('sidebar.php')
         </div>
 
         <div class="container">
-            Home
+            <div class="content p-4">
+                <div class="card shadow rounded-4" style="border: none;">
+                    <div class="card-body p-5">
+                        <h3 class="fw-700">Dashboard</h3>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <footer class="py-4 mt-auto">

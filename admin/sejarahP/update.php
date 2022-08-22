@@ -33,7 +33,7 @@ if(isset($_POST['simpan']))
 	$nama = $_POST['nama'];
 	$tahun = $_POST['tahun'];
 
-    if($_FILES['foto']['error'] === 4){
+    if($_FILES['foto']['error'] === TRUE){
 		$_SESSION['alert-gagal'] = "Gambar tidak ada!";
 		header("Location: /malalo/admin/sejarahP/");
 	}else{
@@ -47,7 +47,7 @@ if(isset($_POST['simpan']))
 		if(!in_array($imageExtension, $validImageExtension)){
 			$_SESSION['alert-gagal'] = "Ektensi gambar tidak diperbolehkan!";
 			header("Location: /malalo/admin/sejarahP/");
-		}else if($fileSize < 1000000){
+		}else if($fileSize > 10044070){
 			$_SESSION['alert-gagal'] = "Ukuran gambar melebihi 10MB!";
 			header("Location: /malalo/admin/sejarahP/");
 		}else{
@@ -101,7 +101,7 @@ include('../sidebar.php');
                 <div class="card shadow rounded-4" style="border: none;">
                     <div class="card-body p-5">
                         <div class="row">
-                            <div class="float-start mb-4" style="border-bottom: 2px solid rgba(71, 139, 202, 0.6); width: 460px;"> <h5 class="fw-700">Form Edit Wali Nagari Guguak Malalo</h5></div>
+                            <div class="float-start mb-4" style="border-bottom: 2px solid rgba(71, 139, 202, 0.6); width: auto;"> <h5 class="fw-700">Form Edit Wali Nagari Guguak Malalo</h5></div>
                         </div>
                             <form action="" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="id" value=<?php echo $_GET['id']; ?>>
@@ -115,10 +115,10 @@ include('../sidebar.php');
                                 </div>
                                 <div class="mb-3">
                                     <label for="formFile" class="form-label">Foto</label>
-                                    <input name="foto" class="form-control" type="file" id="formFile">
+                                    <input name="foto" class="form-control" type="file" id="formFile" value="<?php echo $xx; ?>">
                                     <small class="text-danger">Ukuran foto maksimal 10MB</small>
                                 </div>
-                                <button type="input" name="simpan" class="btn btn-success float-end">Simpan</button>
+                                <button type="submit" name="simpan" class="btn btn-success float-end">Simpan</button>
                                 <a href="index.php" class="btn btn-danger float-start">Kembali</a>
                             </form>
                     </div>

@@ -78,7 +78,7 @@ $data = $res -> fetch_assoc();
                         <form action="action.php" method="post">
                             <h3 class="fw-700">Sejarah Nagari</h3>
                             <div class="form-floating mb-5">
-                                <textarea name="sejarahN" class="form-control" placeholder="Visi" style="height: 500px" id="floatingTextarea"><?php echo $data['sejarahN']; ?></textarea>
+                                <textarea name="sejarahN" class="form-control" placeholder="Sejarah Nagari" style="height: 500px" id="floatingTextarea"><?php echo $data['sejarahN']; ?></textarea>
                             </div>
                             <button type="submit" name="simpan" class="btn btn-success float-end">Simpan</button>
                         </form>

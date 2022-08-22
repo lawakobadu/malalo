@@ -1,3 +1,7 @@
+<?php
+require_once ('config.php');
+setlocale(LC_ALL, 'id-ID', 'id_ID');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,90 +125,54 @@
                     <h1 class="fw-700">Berita Nagari</h1>
                 </div>
                 <div data-aos="zoom-in" class="row row-cols-1 row-cols-md-3 g-4">
+                    <?php
+                    $batas = 6;
+                    $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
+                    $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;	
+    
+                    $previous = $halaman - 1;
+                    $next = $halaman + 1;
+                    
+                    $sql = mysqli_query($conn,"SELECT * FROM berita");
+                    $jumlah_data = mysqli_num_rows($sql);
+                    $total_halaman = ceil($jumlah_data / $batas);
+    
+                    $sql2 = "SELECT * FROM berita LIMIT $halaman_awal, $batas";
+                    $res = $conn->query($sql2);
+                    while ($data = $res->fetch_assoc()) { ?>
                     <div class="col">
                         <div class="card h-100">
-                            <img src="img/berita.png" class="card-img-top" alt="Berita">
+                        <img src="admin/berita/upload/<?php echo $data['foto']; ?>" class="card-img-top" alt="Berita">
                             <div class="card-body">
-                                <p class="card-text">19 Agustus 2022</p>
-                                <h5 class="card-title fw-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, quae.</h5>
-                                <p class="card-text">Author : Fadli</p>
-                                <a href="#" class="stretched-link"></a>
+                                <p class="card-text"><?php echo strftime('%A, %d %B %Y',strtotime($data['tanggal'])); ?></p>
+                                <h5 class="card-title fw-700" style="color: #2C89C5;"><?php echo $data['judul']; ?></h5>
+                                <p class="card-text">Author : <?php echo $data['author']; ?></p>
+                                <a href="detail_berita.php?id=<?php echo $data['id']?>" class="stretched-link"></a>
                             </div>
-                            </div>
-                        </div>
-                    <div class="col">
-                        <div class="card h-100">
-                        <img src="img/berita.png" class="card-img-top" alt="Berita">
-                        <div class="card-body">
-                            <p class="card-text">19 Agustus 2022</p>
-                            <h5 class="card-title fw-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, quae.</h5>
-                            <p class="card-text">Author : Fadli</p>
-                            <a href="#" class="stretched-link"></a>
-                        </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card h-100">
-                        <img src="img/berita.png" class="card-img-top" alt="Berita">
-                        <div class="card-body">
-                            <p class="card-text">19 Agustus 2022</p>
-                            <h5 class="card-title fw-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, quae.</h5>
-                            <p class="card-text">Author : Fadli</p>
-                            <a href="#" class="stretched-link"></a>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                        <img src="img/berita.png" class="card-img-top" alt="Berita">
-                        <div class="card-body">
-                            <p class="card-text">19 Agustus 2022</p>
-                            <h5 class="card-title fw-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, quae.</h5>
-                            <p class="card-text">Author : Fadli</p>
-                            <a href="#" class="stretched-link"></a>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                        <img src="img/berita.png" class="card-img-top" alt="Berita">
-                        <div class="card-body">
-                            <p class="card-text">19 Agustus 2022</p>
-                            <h5 class="card-title fw-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, quae.</h5>
-                            <p class="card-text">Author : Fadli</p>
-                            <a href="#" class="stretched-link"></a>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                        <img src="img/berita.png" class="card-img-top" alt="Berita">
-                        <div class="card-body">
-                            <p class="card-text">19 Agustus 2022</p>
-                            <h5 class="card-title fw-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, quae.</h5>
-                            <p class="card-text">Author : Fadli</p>
-                            <a href="#" class="stretched-link"></a>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div>
-            </div>
                 <div class="mt-5">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-end">
-                            <li class="page-item disabled">
-                                <a class="page-link">Previous</a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">1</a>
-                            </li>
                             <li class="page-item">
-                                <a class="page-link" href="#">2</a>
+                                <a class="page-link" <?php if($halaman > 1){ echo "href='?halaman=$previous'"; } ?>>Previous</a>
                             </li>
+                            <?php 
+                            for($x=1;$x<=$total_halaman;$x++) : ?>
+                                <?php if($x == $halaman) : ?>
+                                <li class="page-item active">
+                                    <a class="page-link" href="?halaman=<?php echo $x ?>"><?php echo $x; ?></a>
+                                </li>
+                                <?php else : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?halaman=<?php echo $x ?>"><?php echo $x; ?></a>
+                                </li>
+                                <?php endif; ?>
+                            <?php endfor; ?>		
                             <li class="page-item">
-                                <a class="page-link" href="#">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
+                                <a  class="page-link" <?php if($halaman < $total_halaman) { echo "href='?halaman=$next'"; } ?>>Next</a>
                             </li>
                         </ul>
                     </nav>

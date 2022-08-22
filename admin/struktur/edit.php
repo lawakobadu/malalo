@@ -50,7 +50,7 @@ include('../sidebar.php');
                             <div class="float-start mb-4" style="border-bottom: 2px solid rgba(71, 139, 202, 0.6); width: 460px;"> <h5 class="fw-700">Form Edit Struktur Organisasi</h5></div>
                         </div>
                         <form action="action.php" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="id" value=<?php echo $_GET['id']; ?>>
+                            <!-- <input type="hidden" name="id" value=<?php echo $_GET['id']; ?>> -->
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Foto</label>
                                 <input name="foto" class="form-control" type="file" id="formFile">

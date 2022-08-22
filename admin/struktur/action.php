@@ -3,7 +3,7 @@ include_once("../../config.php");
  
 if(isset($_POST['simpan']))
 {	
-	$id = 1;
+	// $id = 1;
 
     if($_FILES['foto']['error'] === 4){
 		$_SESSION['alert-gagal'] = "Gambar tidak ada!";
@@ -19,7 +19,7 @@ if(isset($_POST['simpan']))
 		if(!in_array($imageExtension, $validImageExtension)){
 			$_SESSION['alert-gagal'] = "Ektensi gambar tidak diperbolehkan!";
 			header("Location: /malalo/admin/struktur/");
-		}else if($fileSize < 1000000){
+		}else if($fileSize > 10044070){
 			$_SESSION['alert-gagal'] = "Ukuran gambar melebihi 10MB!";
 			header("Location: /malalo/admin/struktur/");
 		}else{
@@ -27,7 +27,7 @@ if(isset($_POST['simpan']))
 			$newImageName .= '.' . $imageExtension;
 
 			move_uploaded_file($tmpName, 'upload/'.$newImageName);
-			$sql = "UPDATE profil SET struktur='$newImageName' WHERE id='$id'";
+			$sql = "UPDATE profil SET struktur='$newImageName'";
 			mysqli_query($conn, $sql);
             // var_dump($sql);
 			$_SESSION['alert'] = "Struktur Organisasi berhasil diupdate";

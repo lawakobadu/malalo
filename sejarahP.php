@@ -2,7 +2,6 @@
 require_once ('config.php');
 $sql = "SELECT * FROM sejarahP";
 $res = $conn->query($sql);
-$data = $res -> fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,13 +64,22 @@ $data = $res -> fetch_assoc();
                 <div class="content p-4">
                     <div class="card shadow rounded-4" style="border: none;">
                         <div class="card-body p-5">
-                            <h3 class="fw-700">Visi</h3>
-                            <div class="form-floating mb-5">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis aut quae, consequatur rerum repellat tempora at, dolores error vero maiores rem ratione ipsam recusandae molestias ipsa dolore officiis debitis atque distinctio velit totam sequi. Aut atque ab eligendi et, facilis quas aspernatur enim modi inventore mollitia distinctio fuga vitae architecto ea molestias nobis laboriosam omnis velit impedit sint. Voluptate eaque hic eius amet eum ea repellendus iusto. Sit repellendus perspiciatis voluptas, doloribus libero eos at enim facere commodi magni quidem laudantium accusantium vero distinctio nobis facilis minus non repellat itaque molestiae maxime pariatur tempora voluptate cupiditate. Quidem alias voluptatem neque?</p>
-                            </div>
-                            <h3 class="fw-700">Misi</h3>
-                            <div class="form-floating mb-5">
-                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni nam, perspiciatis, error ad quis excepturi non soluta ea ex numquam voluptatem repellendus, odit velit neque dolorum reiciendis illo esse quas at. Earum ex suscipit deleniti vitae repellendus eius ea dolor voluptatum quas sit quisquam excepturi rerum aut nulla, quos, non ipsa autem in omnis! Nostrum voluptates nam nulla modi dolorem recusandae at nihil vitae aperiam magnam maiores, labore accusantium impedit vero quam repudiandae aut fuga nemo qui consectetur corrupti odio voluptatibus in? Corporis, officiis temporibus doloremque magni impedit architecto ex saepe officia veniam reprehenderit doloribus vero. Assumenda ab cumque quia.</p>
+                        <h3 class="fw-700">Sejarah Pemerintahan</h3>
+                            <div class="text-center mt-5">
+                                <div class="row">
+                                    <?php while ($data = $res->fetch_assoc()) { ?>
+                                    <div class="col-md-4 mb-5">
+                                        <div class="position-relative">
+                                        <img class="img-fluid w-100" src="admin/sejarahP/upload/<?php echo $data['foto'] ?>" style="height: 300px !important;"alt="">
+                                        </div>
+                                        <div class="mb-3 mt-3">
+                                            <h3 class="fw-700"><?php echo $data['nama']; ?></h3>
+                                            <p class="text-muted ml-2">Masa Pemerintahan : <?php echo $data['tahun']; ?></p>
+                                            </div>
+                                        </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

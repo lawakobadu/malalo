@@ -1,3 +1,20 @@
+<?php
+require_once ('config.php');
+setlocale(LC_ALL, 'id-ID', 'id_ID');
+$batas = 5;
+$halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
+$halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;	
+
+$previous = $halaman - 1;
+$next = $halaman + 1;
+
+$sql = mysqli_query($conn,"SELECT * FROM berita");
+$jumlah_data = mysqli_num_rows($sql);
+$total_halaman = ceil($jumlah_data / $batas);
+
+$sql2 = "SELECT * FROM berita LIMIT $halaman_awal, $batas";
+$res = $conn->query($sql2);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,50 +98,38 @@
         <div class="home_content">
             <div class="container">
                 <div class="content p-4">
+                    <?php while ($data = $res->fetch_assoc()) { ?>
                     <div class="d-flex position-relative mt-5">
-                        <img src="img/berita.png" style="width: 250px;" class="img-fluid flex-shrink-0 me-3" alt="Berita">
+                        <img src="admin/berita/upload/<?php echo $data['foto']; ?>" style="width: 250px;" class="img-fluid flex-shrink-0 me-3" alt="Berita">
                         <div>
-                            <h3 class="fw-700 mt-0">Custom component with stretched link</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente rem blanditiis aliquam id at corrupti, sed consequuntur, recusandae est expedita ad distinctio eveniet in nulla nesciunt illum hic, accusamus fugit fugiat? Similique saepe hic quod voluptates? Rerum iusto ratione distinctio quis. Neque ipsa ea perspiciatis libero eum laudantium, maxime dicta.</p>
-                            <a href="#" class="stretched-link bg-grey btn text-decoration-none text-black p-2"><small>Baca lebih lanjut</small></a>
+                            <h3 class="fw-700 mt-0" style="color: #2C89C5;"><?php echo $data['judul']; ?></h3>
+                            <small class="bg-light"><i class="fa-solid fa-calendar-days me-2"></i><?php echo strftime('%A, %d %B %Y',strtotime($data['tanggal'])); ?> | <i class="fa-solid fa-user me-2"></i><?php echo $data['author']; ?></small>
+                            <p class="mt-2"><?php echo substr($data['isi'], 0, 200)?> ...</p>
+                            <a href="detail_berita.php?id=<?php echo $data['id']?>" class="mt-2 stretched-link bg-grey btn text-decoration-none text-black p-2"><small>Baca lebih lanjut</small></a>
                         </div>
                     </div>
                     <hr>
-                    <div class="d-flex position-relative mt-5">
-                        <img src="img/berita.png" style="width: 250px;" class="img-fluid flex-shrink-0 me-3" alt="Berita">
-                        <div>
-                            <h3 class="fw-700 mt-0">Custom component with stretched link</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente rem blanditiis aliquam id at corrupti, sed consequuntur, recusandae est expedita ad distinctio eveniet in nulla nesciunt illum hic, accusamus fugit fugiat? Similique saepe hic quod voluptates? Rerum iusto ratione distinctio quis. Neque ipsa ea perspiciatis libero eum laudantium, maxime dicta.</p>
-                            <a href="#" class="stretched-link bg-grey btn text-decoration-none text-black p-2"><small>Baca lebih lanjut</small></a>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="d-flex position-relative mt-5">
-                        <img src="img/berita.png" style="width: 250px;" class="img-fluid flex-shrink-0 me-3" alt="Berita">
-                        <div>
-                            <h3 class="fw-700 mt-0">Custom component with stretched link</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente rem blanditiis aliquam id at corrupti, sed consequuntur, recusandae est expedita ad distinctio eveniet in nulla nesciunt illum hic, accusamus fugit fugiat? Similique saepe hic quod voluptates? Rerum iusto ratione distinctio quis. Neque ipsa ea perspiciatis libero eum laudantium, maxime dicta.</p>
-                            <a href="#" class="stretched-link bg-grey btn text-decoration-none text-black p-2"><small>Baca lebih lanjut</small></a>
-                        </div>
-                    </div>
-                    <hr>
+                    <?php } ?>
                     <div class="mt-5">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-end">
-                            <li class="page-item disabled">
-                                <a class="page-link">Previous</a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">1</a>
-                            </li>
                             <li class="page-item">
-                                <a class="page-link" href="#">2</a>
+                                <a class="page-link" <?php if($halaman > 1){ echo "href='?halaman=$previous'"; } ?>>Previous</a>
                             </li>
+                            <?php 
+                            for($x=1;$x<=$total_halaman;$x++) : ?>
+                                <?php if($x == $halaman) : ?>
+                                <li class="page-item active">
+                                    <a class="page-link" href="?halaman=<?php echo $x ?>"><?php echo $x; ?></a>
+                                </li>
+                                <?php else : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?halaman=<?php echo $x ?>"><?php echo $x; ?></a>
+                                </li>
+                                <?php endif; ?>
+                            <?php endfor; ?>		
                             <li class="page-item">
-                                <a class="page-link" href="#">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
+                                <a  class="page-link" <?php if($halaman < $total_halaman) { echo "href='?halaman=$next'"; } ?>>Next</a>
                             </li>
                         </ul>
                     </nav>

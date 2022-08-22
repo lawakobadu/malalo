@@ -17,8 +17,9 @@ if(!isset($_SESSION['username'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Css -->
-    <!-- <link rel="stylesheet" href="../css/sidebar.css"> -->
+    <!-- Data table -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
     
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,7 +75,7 @@ include('../../config.php');
                     ?>
                     <div class="page-header clearfix">
                         <h3 class="fw-700 pull-left">Sejarah Pemerintahan</h3>
-                        <a href="create.php" class="mt-3 btn btn-success pull-right">Tambah Baru</a>
+                        <a href="create.php" class="mt-3 btn btn-success pull-right mb-4">Tambah Baru</a>
                     </div>
                     <?php
                     // Attempt select query execution
@@ -83,7 +84,7 @@ include('../../config.php');
                     if($result = mysqli_query($conn, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<div class='table-responsive'>";
-                                echo "<table class='mt-4 table table-bordered table-hover'>";
+                                echo "<table id='example' class='table table-striped' style='width:100%'>";
                                     echo "<thead class='bg-primary text-white'>";
                                         echo "<tr>";
                                             echo "<th>No.</th>";
@@ -137,6 +138,14 @@ include('../../config.php');
         </footer>
     </section>
 
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready( function () {
+    $('#example').DataTable();
+} );
+</script>
 <script src="/malalo/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>

@@ -103,6 +103,9 @@
                     </li>
                 </ul>
             </li>
+            <?php
+            if($_SESSION['role'] === "admin"){
+            ?>
             <li>
                 <a href="/malalo/admin/user">
                     <i class="fa-solid fa-address-card"></i>
@@ -114,14 +117,23 @@
                     </li>
                 </ul>
             </li>
+            <?php } ?>
             <li>
             <div class="profile_details">
                 <div class="profile_content">
-                    <img src="/malalo/img/fadli.jpg" alt="Foto">
+                    <?php
+                    require_once('config.php');
+                    
+                    $id= $_SESSION['id'];
+                    $sql = "SELECT * FROM users WHERE id = '$id' LIMIT 1";
+                    $res = $conn->query($sql);
+                    $data = $res->fetch_assoc();
+                    ?>
+                    <a href="/malalo/admin/profile.php?id=<?php echo $data['id']; ?>"><img src="/malalo/admin/user/upload/<?php echo $data['foto']; ?>" alt="Foto"></a>
                 </div>
                     <div class="name_job">
-                        <div class="profile_name">Ahmad Fadli Ramadhan</div>
-                        <div class="job">Programmer</div>
+                        <div class="profile_name"><?php echo $_SESSION['name']; ?></div>
+                        <div class="job"><?php echo $_SESSION['jabatan']; ?></div>
                     </div>
                     <a href="/malalo/admin/logout.php"><i class="fa-solid fa-right-from-bracket"></i></a>
                 </div>

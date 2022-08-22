@@ -17,8 +17,9 @@ if(!isset($_SESSION['username'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Css -->
-    <!-- <link rel="stylesheet" href="../css/sidebar.css"> -->
+    <!-- Data table -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
     
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,9 +49,33 @@ include('../../config.php');
             <div class="content p-4">
                 <div class="card shadow rounded-4" style="border: none;">
                     <div class="card-body p-5">
+                        <?php
+                            if(isset($_SESSION['alert'])){
+                        ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?php
+                                echo $_SESSION['alert'];
+                            ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <?php
+                            }else if(isset($_SESSION['alert-gagal'])){
+                        ?>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <?php
+                                    echo $_SESSION['alert-gagal'];
+                                ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <?php
+                            }
+                            unset($_SESSION['alert']);
+                            unset($_SESSION['alert-gagal']);
+                        ?>
                     <div class="page-header clearfix">
                         <h3 class="fw-700 pull-left">Berita</h3>
-                        <a href="create.php" class="btn btn-success pull-right">Tambah Baru</a>
+                        <a href="create.php" class="mt-3 btn btn-success pull-right mb-4">Tambah Baru</a>
                     </div>
                     <?php
                     // Attempt select query execution
@@ -58,37 +83,40 @@ include('../../config.php');
                     $sql = "SELECT * FROM berita";
                     if($result = mysqli_query($conn, $sql)){
                         if(mysqli_num_rows($result) > 0){
-                            echo "<table class='table table-bordered table-striped'>";
-                                echo "<thead>";
-                                    echo "<tr>";
-                                        echo "<th>No.</th>";
-                                        echo "<th>Judul</th>";
-                                        echo "<th>Tanggal</th>";
-                                        echo "<th>Author</th>";
-                                        echo "<th>Isi</th>";
-                                        echo "<th>Foto</th>";
-                                    echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-                                while($row = mysqli_fetch_array($result)){
-                                    echo "<tr>";
-                                        echo "<td>" . $no . "</td>";
-                                        echo "<td>" . $row['judul'] . "</td>";
-                                        echo "<td>" . $row['tanggal'] . "</td>";
-                                        echo "<td>" . $row['author'] . "</td>";
-                                        echo "<td>" . $row['isi'] . "</td>";
-                                        echo "<td>" . $row['foto'] . "</td>";
-                                        echo "<td>";
-                                            echo "<a href='read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='fa-solid fa-eye'></span></a>";
-                                            echo "<a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='fa-solid fa-pencil'></span></a>";
-                                            echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='fa-solid fa-trash'></span></a>";
-                                        echo "</td>";
-                                    echo "</tr>";
-                                }
-                                echo "</tbody>";
-                            echo "</table>";
-                            // Free result set
-                            mysqli_free_result($result);
+                            echo "<div class='table-responsive'>";
+                                echo "<table id='example' class='table table-striped' style='width:100%'>";
+                                    echo "<thead class='bg-primary text-white'>";
+                                        echo "<tr>";
+                                            echo "<th>No.</th>";
+                                            echo "<th>Judul</th>";
+                                            echo "<th>Tanggal</th>";
+                                            echo "<th>Author</th>";
+                                            echo "<th>Isi</th>";
+                                            echo "<th>Foto</th>";
+                                            echo "<th>Action</th>";
+                                        echo "</tr>";
+                                    echo "</thead>";
+                                    echo "<tbody>";
+                                    while($row = mysqli_fetch_array($result)){
+                                        echo "<tr>";
+                                            echo "<td>" . $no++ . "</td>";
+                                            echo "<td>" . $row['judul'] . "</td>";
+                                            echo "<td>" . $row['tanggal'] . "</td>";
+                                            echo "<td>" . $row['author'] . "</td>";
+                                            echo "<td>" . substr($row['isi'], 0, 200) . " ...</td>";
+                                            ?><td> <img src="upload/<?php echo $row['foto'];?>" alt="Foto" width="100" height="100"></td><?php
+                                            echo "<td>";
+                                                echo "<a class='mx-1 btn btn-info' href='read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='text-white fa-solid fa-eye'></span></a>";
+                                                echo "<a class='mx-1 btn btn-warning' href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='text-white fa-solid fa-pencil'></span></a>";
+                                                echo "<a class='mx-1 btn btn-danger' href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='text-white fa-solid fa-trash'></span></a>";
+                                            echo "</td>";
+                                        echo "</tr>";
+                                    }
+                                    echo "</tbody>";
+                                echo "</table>";
+                                // Free result set
+                                mysqli_free_result($result);
+                            echo "</div>";
                         } else{
                             echo "<p class='lead'><em>No records were found.</em></p>";
                         }
@@ -115,6 +143,14 @@ include('../../config.php');
         </footer>
     </section>
 
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready( function () {
+    $('#example').DataTable();
+} );
+</script>
 <script src="/malalo/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>

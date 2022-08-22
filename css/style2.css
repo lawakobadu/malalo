@@ -7,6 +7,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+body{
+    background: #f6f6f6 !important;
+}
+
 header{
     position: relative;
     top: 0;

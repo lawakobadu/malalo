@@ -44,7 +44,7 @@ $data = $res -> fetch_assoc();
     <section class="home_section">
         <div class="home_content">
             <i class="fa-solid fa-bars fa-2xl"></i>
-            <span class="text">Selamat Datang, ...</span>
+            <span class="text">Selamat Datang, <?php echo $_SESSION['username']; ?></span>
         </div>
 
         <div class="container">
@@ -76,11 +76,11 @@ $data = $res -> fetch_assoc();
                             unset($_SESSION['alert-gagal']);
                         ?>
                         <form action="action.php" method="post">
-                            <div class="page-header clearfix">
+                            <div class="page-header clearfix mb-4">
                                 <h3 class="fw-700 pull-left">Struktur Organisasi</h3>
                                 <a href="edit.php" class="mt-3 btn btn-success pull-right">Ubah</a>
                             </div>
-                            <img src="upload/<?php echo $data['struktur'];?>" alt="" class="img-fluid mx-auto d-block"/>
+                            <img src="upload/<?php echo $data['struktur']; ?>" alt="Struktur Organisasi" class="img-fluid mx-auto d-block"/>
                             <!-- <button type="button" name="simpan" class="btn btn-success float-end">Simpan</button> -->
                         </form>
                     </div>
