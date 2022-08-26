@@ -49,6 +49,7 @@ while($data = $res -> fetch_assoc()){
                     <li><a class="dropdown-item" href="sejarahP.php">Sejarah Pemerintahan</a></li>
                     <li><a class="dropdown-item" href="letak.php">Letak Topografi</a></li>
                     <li><a class="dropdown-item" href="struktur.php">Struktur Organisasi</a></li>
+                    <li><a class="dropdown-item" href="pelayanan.php">Pelayanan</a></li>
                 </ul>
             </li>
             <li><a href="berita.php">Berita</a></li>
@@ -80,7 +81,7 @@ while($data = $res -> fetch_assoc()){
                                 <img class="mt-4 mb-4 row img-fluid" src="admin/berita/upload/<?php echo $foto; ?>" style="width: 500px; height: 300px;" alt="Berita">
                             </div>
                             <p class="justify-content-start"><?php echo $isi; ?></p>
-                            <a href="index.php" class="btn btn-danger float-start">Kembali</a>
+                            <a href="berita.php" class="btn btn-danger float-start">Kembali</a>
                         </div>
                     </div>
                 </div>

@@ -43,6 +43,7 @@ setlocale(LC_ALL, 'id-ID', 'id_ID');
                     <li><a class="dropdown-item" href="sejarahP.php">Sejarah Pemerintahan</a></li>
                     <li><a class="dropdown-item" href="letak.php">Letak Topografi</a></li>
                     <li><a class="dropdown-item" href="struktur.php">Struktur Organisasi</a></li>
+                    <li><a class="dropdown-item" href="pelayanan.php">Pelayanan</a></li>
                 </ul>
             </li>
             <li><a href="berita.php">Berita</a></li>
