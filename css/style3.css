@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background-color: #F6F6F6 !important;
+}
+
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.6s;
+    padding: 20px 100px;
+    z-index: 1;
+}
+
+header .logo{
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: 0.6s;
+    width: 300px;
+    text-align: center;
+}
+
+header ul{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header ul li{
+    position: relative;
+    list-style: none;
+}
+
+header ul li a{
+    position: relative;
+    margin: 0 15px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 700;
+}
+
+.back-video{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+@media (min-aspect-ratio: 16/9){
+    .back-video{
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-aspect-ratio: 16/9){
+    .back-video{
+        width: auto;
+        height: 100%;
+    }
+}
+
+.fw-700{
+    font-weight: 700;
+}
+
+.content{
+    position: relative;
+    height: 100vh;
+    display: flex;
+}
+
+.content .title{
+    text-align: center;
+    margin: auto;
+}
+
+.content .btn-blue{
+    background-color: rgba(71, 139, 202, 0.6);
+    border-radius: 20px;
+    display: inline-block;
+    margin: auto;
+}
+
+.banner{
+    position: absolute;
+    width: 100%;
+    height: 700px;
+    background: linear-gradient(180deg, rgba(246, 246, 246, 0) 0%, #F6F6F6 100%), url(../img/linier-background.jpg);
+    background-size: cover;
+    z-index: -1;
+}
+
+footer{
+    width: 100%;
+    /* height: 205px; */
+    background: #2A272A;
+}
+
+.row .col img:hover{
+    transform: scale(1.1);
+    transition: transform .5s ease;
+    cursor: pointer;
+}
