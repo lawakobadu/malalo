@@ -37,6 +37,12 @@ if(!isset($_SESSION['username'])){
 <body>
 <?php
 include('../sidebar.php');
+$id = $_GET['id'];
+$sql2 = "SELECT * FROM jenis_sarana WHERE id='$id'";
+$res = $conn->query($sql2);
+while($data = $res -> fetch_assoc()){
+    $nama_jenis = $data['nama_jenis'];
+  }
 ?>
     <section class="home_section">
         <div class="home_content">
@@ -73,14 +79,14 @@ include('../sidebar.php');
                             unset($_SESSION['alert-gagal']);
                         ?>
                     <div class="page-header clearfix">
-                        <h3 class="fw-700 pull-left">Sarana dan Prasarana</h3>
-                        <a href="create_detail.php" class="mt-3 btn btn-success pull-right mb-4">Tambah Baru</a>
+                        <h3 class="fw-700 pull-left"><?php echo $nama_jenis; ?></h3>
+                        <a href="create_detail.php?id=<?php echo $id; ?>" class="mt-3 btn btn-success pull-right mb-4">Tambah Baru</a>
                     </div>
                     <?php
                     // Attempt select query execution
                     $no = 1;
                     $id = $_GET['id'];
-                    $sql = "SELECT sarana.id, sarana.nama, sarana.id_jenis jenis_sarana.nama_jenis, sarana.alamat, sarana.foto FROM sarana INNER JOIN jenis_sarana ON (sarana.id_jenis=jenis_sarana.id) WHERE sarana.id_jenis='$id'";
+                    $sql = "SELECT sarana.*, jenis_sarana.nama_jenis FROM sarana INNER JOIN jenis_sarana ON (sarana.id_jenis=jenis_sarana.id) WHERE sarana.id_jenis='$id'";
                     if($result = mysqli_query($conn, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<div class='table-responsive'>";
@@ -105,7 +111,7 @@ include('../sidebar.php');
                                             ?><td> <img src="upload/<?php echo $row['foto'];?>" alt="Foto" width="100" height="100"></td><?php
                                             echo "<td>";
                                                 echo "<a class='mx-1 btn btn-info' href='read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='text-white fa-solid fa-eye'></span></a>";
-                                                echo "<a class='mx-1 btn btn-warning' href='update_detail.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='text-white fa-solid fa-pencil'></span></a>";
+                                                echo "<a class='mx-1 btn btn-warning' href='update_detail.php?id=". $row['id'] ."&id_jenis=". $row['id_jenis'] ."' title='Update Record' data-toggle='tooltip'><span class='text-white fa-solid fa-pencil'></span></a>";
                                                 echo "<a class='mx-1 btn btn-danger' href='delete_detail.php?id=". $row['id'] ."&id_jenis=". $row['id_jenis'] ."' title='Delete Record' data-toggle='tooltip'><span class='text-white fa-solid fa-trash'></span></a>";
                                             echo "</td>";
                                         echo "</tr>";

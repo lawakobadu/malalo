@@ -34,7 +34,6 @@ if(isset($_POST['simpan']))
 
 	$judul = $_POST['judul'];
 	$tanggal = $_POST['tanggal'];
-	$tanggal = $_POST['tanggal'];
 	$isi = $_POST['isi'];
 
     if($_FILES['foto']['error'] === TRUE){

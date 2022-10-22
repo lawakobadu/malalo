@@ -11,16 +11,16 @@ if(!isset($_SESSION['username'])){
 ?>
 <?php
 include("../../config.php");
-$sql = "SELECT * FROM jenis_sarana";
-$data2 = mysqli_query($conn, $sql);
-while($row = mysqli_fetch_array($data2))
-    {
-        $id = $row['id'];
-    }
+$id = $_GET['id'];
+$sql = "SELECT sarana.*, jenis_sarana.nama_jenis FROM sarana INNER JOIN jenis_sarana ON (sarana.id_jenis=jenis_sarana.id) WHERE sarana.id_jenis='$id'";
+$res = $conn->query($sql);
+while($data = $res -> fetch_assoc()){
+    $id = $data['id'];
+    $id_jenis = $data['id_jenis'];
+    $nama_jenis = $data['nama_jenis'];
+  }
 
 if(isset($_POST['simpan'])){
-    $id = $_POST['id'];
-    $id_jenis = $_POST['id_jenis'];
     $nama = $_POST['nama'];
     $alamat = $_POST['alamat'];
 
@@ -48,7 +48,7 @@ if(isset($_POST['simpan'])){
 			move_uploaded_file($tmpName, 'upload/'.$newImageName);
 			$sql2 = "INSERT INTO sarana VALUES ('', '$id_jenis', '$nama', '$alamat', '$newImageName')";
 			mysqli_query($conn, $sql2);
-			$_SESSION['alert'] = "Sarana baru berhasil ditambahkan";
+			$_SESSION['alert'] = "Detail sarana baru berhasil ditambahkan";
 			header("Location: /malalo/admin/sarana/detail.php?id={$id_jenis}");
 		}
 	}
@@ -99,15 +99,9 @@ include('../sidebar.php');
                                     <label for="exampleFormControlInput1" class="form-label">Nama Sarana</label>
                                     <input name="nama" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nama Sarana" required>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label>Jenis Sarana</label>
-                                    <select class="form-select" aria-label="Default select example" name="id_jenis">
-                                        <option selected></option>
-                                        <?php
-                                        foreach($data2 as $d){
-                                            echo "<option value='".$d['id']."'>".$d['nama_jenis']."</option>";
-                                        }?>
-                                    </select>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput2" class="form-label">Jenis Sarana</label>
+                                    <input name="id_jenis" type="text" value="<?php echo $nama_jenis; ?>" class="form-control" id="exampleFormControlInput2" placeholder="Jenis Sarana" required readonly>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label>Alamat</label>
@@ -119,7 +113,7 @@ include('../sidebar.php');
                                     <small class="text-danger">Ukuran foto maksimal 10MB</small>
                                 </div>
                                 <button type="submit" name="simpan" class="btn btn-success float-end">Simpan</button>
-                                <a href="detail.php" class="btn btn-danger float-start">Kembali</a>
+                                <a href="detail.php?id=<?php echo $id_jenis; ?>" class="btn btn-danger float-start">Kembali</a>
                             </form>
                     </div>
                 </div>

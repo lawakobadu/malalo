@@ -58,7 +58,7 @@ include('../sidebar.php');
                 <div class="card shadow rounded-4" style="border: none;">
                     <div class="card-body p-5">
                         <div class="row">
-                            <div class="float-start mb-4" style="border-bottom: 2px solid rgba(71, 139, 202, 0.6); width: auto;"> <h5 class="fw-700">Form Tambah Berita</h5></div>
+                            <div class="float-start mb-4" style="border-bottom: 2px solid rgba(71, 139, 202, 0.6); width: auto;"> <h5 class="fw-700">Form Tambah Sarana</h5></div>
                         </div>
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="mb-3">

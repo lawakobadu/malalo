@@ -22,7 +22,7 @@ header{
     align-items: center;
     transition: 0.6s;
     padding: 20px 100px;
-    z-index: 4;
+    z-index: 1;
 }
 
 header.sticky{
@@ -70,6 +70,7 @@ header ul li a{
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../img/background.png);
     background-size: cover;
     display: flex;
+    z-index: -1;
 }
 
 .banner .title{

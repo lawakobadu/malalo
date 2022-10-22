@@ -1,6 +1,6 @@
 <?php
 require_once ('config.php');
-$sql = "SELECT * FROM profil WHERE id=1";
+$sql = "SELECT * FROM pariwisata";
 $res = $conn->query($sql);
 $data = $res -> fetch_assoc();
 ?>
@@ -25,7 +25,7 @@ $data = $res -> fetch_assoc();
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     
-    <title>Visi dan Misi - Nagari Guguk Malalo</title>
+    <title>Pariwisata - Nagari Guguk Malalo</title>
 </head>
 <body>
     <header>
@@ -59,74 +59,52 @@ $data = $res -> fetch_assoc();
             <li><a href="pariwisata.php">Pariwisata</a></li>
         </ul>
     </header>
-
-    <section class="content">
-        <video autoplay loop muted plays-inline class="back-video">
-            <source src="img/video.mp4" type="video/mp4">
-        </video>
-        
-        <div class="text-center title">
-            <h1 class="fw-700 text-white">Enjoy Your Holiday <br> in Tourism Malalo</h1>
-            <p class="fw-lighter text-white">Lupakan semua rasa penatmu yang ada dipikiran, datanglah ke Nagari Malalo bersama orang kesayanganmu</p>
-            <a class="btn btn-blue text-white" href="#content2"><h3 class="fw-bold p-1">Discover</h3></a>
-        </div>
-    </section>
     
-    <section class="banner" id="content2">
-        <div class="container-fluid text-center">
-            <div class="mt-5 p-5 row g-2">
-                <div class="col-6">
-                    <img src="img/tangkayo1.jpg" alt="">
-                </div>
-                <div class="col-6">
-                    <h1 class="ms-5 text-start fw-700">Tangkayo Eco Park</h1>
-                    <h3 class="ms-5 text-start">Nagari Padang Laweh Malalo, Kecamatan Batipuh Selatan, Kabupaten Tanah Datar, Sumatera Barat</h3>
-                </div>
-                <div class="col-6">
-                    <p class="text-start">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus necessitatibus quam, porro labore fugit consequuntur accusamus quo cumque neque quaerat odio mollitia qui nemo vero iure laudantium, quasi minus quibusdam placeat! Obcaecati distinctio asperiores ut facilis quia. Id nemo cumque quibusdam expedita! Tempora tempore porro facilis enim culpa accusamus iste.</p>
-                </div>
-                <div class="col-6">
-                    <img src="img/tangkayo2.jpg" alt="">
+    <section class="body">
+        <div class="container">
+            <div class="mt-5 text-start w-50">
+                <h1 class="fw-700 text-white text-uppercase">halo</h1>
+                <p class="text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero officiis voluptate maiores non, ipsam soluta recusandae aperiam incidunt impedit ex dignissimos? Hic necessitatibus fuga officiis alias sed nesciunt dolorem, inventore beatae fugit suscipit sint nobis. Modi vel obcaecati minus labore? Magnam aperiam officia nostrum non similique quam explicabo veniam obcaecati.</p>
+                <a class="btn btn-blue text-white" href="#"><h5 class="p-1">Discover</h5></a>
+            </div>
+            <div class="text-white text-end mb-4">
+                <h1>Pariwisata</h1>
+            </div>
+            <div class="float-end background">
+                <div class="background-change" onclick="background1()"><p class="position-absolute p ms-2 text-white">tangkayo1</p><img src="img/tangkayo1.jpg" alt=""></div>
+                <div class="background-change" onclick="background2()"><p class="position-absolute p ms-2 text-white">tangkayo2</p><img src="img/tangkayo2.jpg" alt=""></div>
+                <div class="background-change" onclick="background3()"><p class="position-absolute p ms-2 text-white">tangkayo3</p><img src="img/tangkayo3.jpg" alt=""></div>
+                <div class="text-white">
+                    <i class="fa-solid fa-2x fa-circle-chevron-left"></i>
+                    <i class="fa-solid fa-2x fa-circle-chevron-right"></i>
                 </div>
             </div>
-
-            <h1 class="fw-700 mt-4 text-center">Foto lainnya</h1>
-
-            <div class="row">
-                <div class="col">
-                    <img src="img/tangkayo3.jpg" alt="" class="mt-3 rounded-4">
-                </div>
-                <div class="col">
-                    <img src="img/tangkayo3.jpg" alt="" class="mt-3 rounded-4">
-                </div>
-                <div class="col">
-                    <img src="img/tangkayo3.jpg" alt="" class="mt-3 rounded-4">
-                </div>
+            <div class="d-flex icon justify-content-around">
+                <a href="#" class="text-white"><i class="me-2 fa-xl fa-brands fa-facebook"></i></a>
+                <a href="#" class="text-white"><i class="me-2 fa-xl fa-brands fa-twitter"></i></a>
+                <a href="#" class="text-white"><i class="me-2 fa-xl fa-brands fa-instagram"></i></a>
             </div>
         </div>
-
-        <footer class="py-4 mt-4">
-            <div class="container-fluid px-4">
-                <div class="ms-5 d-flex align-items-center justify-content-between small">
-                    <div class="text-white">
-                    © 2022 All rights reserved. -- <a class="text-white" href="#">Privacy Policy</a> - <a class="text-white" href="#">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </section>
 
 <script>
-    document.querySelector("#content2").forEach(anchor => {
-    anchor.addEventListener("click" ,function(e){
-        e.preventDefault();
-        document.querySelector(this.getAttribute("href")).scrollIntoView({
-            behavior : "smooth"
-        });
-    });
-});
+    function background1() {
+        var body = document.querySelector(".body");
+        body.style.transition = "all 0.5s ease";
+        body.style.background ="url('img/tangkayo1.jpg') center center / cover";
+    }
+    function background2() {
+        var body = document.querySelector(".body");
+        body.style.transition = "all 0.5s ease";
+        body.style.background ="url('img/tangkayo2.jpg') center center / cover";
+    }
+    function background3() {
+        var body = document.querySelector(".body");
+        body.style.transition = "all 0.5s ease";
+        body.style.background ="url('img/tangkayo3.jpg') center center / cover";
+    }
 </script>
-<script src="js/script.js"></script>
+<!-- <script src="js/script.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>
 </html>
